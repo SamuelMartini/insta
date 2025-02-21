@@ -8,6 +8,14 @@ defmodule Insta.Accounts do
 
   alias Insta.Accounts.{User, UserToken, UserNotifier}
 
+  def get_followers(id) do
+    (get_user!(id) |> Insta.Repo.preload(:followers)).followers
+  end
+
+  def get_followed(id) do
+    (get_user!(id) |> Insta.Repo.preload(:followed)).followed
+  end
+
   ## Database getters
 
   @doc """
