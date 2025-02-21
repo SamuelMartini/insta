@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres_db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres # This line was missing
+      - POSTGRES_DB=postgres       # Optional: Ensure a database is created
+    ports:
+      - '5431:5432'
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+volumes:
+  postgres_db:
+    driver: local
