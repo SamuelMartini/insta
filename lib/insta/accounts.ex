@@ -9,11 +9,19 @@ defmodule Insta.Accounts do
   alias Insta.Accounts.{User, UserToken, UserNotifier}
 
   def get_followers(id) do
-    (get_user!(id) |> Insta.Repo.preload(:followers)).followers
+    (get_user!(id) |> Insta.Repo.preload(:follower_users)).follower_users
   end
 
   def get_followed(id) do
-    (get_user!(id) |> Insta.Repo.preload(:followed)).followed
+    (get_user!(id) |> Insta.Repo.preload(:followed_users)).followed_users
+  end
+
+  #
+  def follow(user, user_to_follow) do
+    Insta.Follow.changeset(%Insta.Follow{}, %{follower_id: user.id, followed_id: user_to_follow.id})
+    |> Repo.insert()
+    # |> User.validate_current_password(password)
+    # |> Ecto.Changeset.apply_action(:update)
   end
 
   ## Database getters
